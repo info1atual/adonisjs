@@ -11,25 +11,22 @@ class CategoryController {
         let categories = yield Category.query()
             .orderBy('name')
             .fetch()
-
+        console.log(categories)
         this.data.categories = categories.toJSON()
 
         yield response.sendView('categorylisting', this.data)
     }
 
-
-    * create(request, response) {
-        yield response.sendView('categoryForm', this.data)
+    async create({ view }) {
+        return view.render('categoryform', this.data)
     }
-
 
     * show(request, response) {
         let category = yield Category.find(request.param('id'))
         this.data.category = category.toJSON()
 
-        yield response.sendView('categoryForm', this.data)
+        yield response.sendView('categoryform', this.data)
     }
-
 
     * store(request, response) {
         let category = new Category()
@@ -44,10 +41,9 @@ class CategoryController {
             this.data.category = category.toJSON()
             this.data.messages = { error: category.errors }
 
-            yield response.sendView('categoryForm', this.data)
+            yield response.sendView('categoryform', this.data)
         }
     }
-
 
     * update(request, response) {
         let category = yield Category.find(request.param('id'))
@@ -62,10 +58,9 @@ class CategoryController {
             this.data.category = category.toJSON()
             this.data.messages = { error: category.errors }
 
-            yield response.sendView('categoryForm', this.data)
+            yield response.sendView('categoryform', this.data)
         }
     }
-
 
     * destroy(request, response) {
         let category = yield Category.find(request.param('id'))
@@ -75,6 +70,7 @@ class CategoryController {
 
         yield this.index(request, response)
     }
+
 }
 
 module.exports = CategoryController

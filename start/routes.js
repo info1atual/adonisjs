@@ -16,4 +16,11 @@
 const Route = use('Route')
 
 // Route.on('/').render('welcome')
-Route.any('/', 'CategoryController.index')
+Route.on('/').render('app')
+
+Route.get('/category', 'CategoryController.create')
+Route.get('/category/create', 'CategoryController.create')
+Route.get('/product/create', 'ProductController')
+
+// Route.resource('/category', 'CategoryController')
+// Route.resource('/product', 'ProductController')
